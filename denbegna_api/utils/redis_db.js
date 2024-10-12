@@ -28,14 +28,13 @@ class RedisClient {
 	}
 
 	async get(key) {
-		const val = new Promise((resolve, reject) => {
-			this.client.GET(key, (err, result) => {
-				if (!err) {
-					resolve(result);
-				}
-			});
-		});
-		return val ? val : null;
+		try {
+			const val = await this.client.GET(key);
+			return val ? val : null;
+		} catch (err) {
+			console.log("Error in redis GET:", err);
+			return null;
+		}
 	}
 
 	async set(key, val, exp) {
