@@ -24,7 +24,6 @@ export default class Products {
 			res.status(401).json({"error": "Unauthorized"});
 			return;
 		}
-		console.log("Pass findById");
 		const category = req.body["category"];
 		if (category == "Electronics" || category == "HomeUtils") {
 			const {name, description, price, stock} = req.body;
@@ -155,5 +154,28 @@ export default class Products {
                 res.status(200).json(final);
         }
 
+	static async getProduct(req, res) {
+		const token = req.headers['x-token'];
+                const user_id = await redisClient.get(token);
 
+                if (!user_id) {
+                        res.status(401).json({"message": "Session expired"});
+                        return;
+                }
+                const user = await User.findById(user_id);
+                if (!user) {
+                        res.status(401).json({"error": "Unauthorized"});
+                        return;
+                }
+		const catagories = {
+			"Clothings": Clothings,
+			"BookMedias": BookMedias,
+                        "Electronics": Electronics,
+                        "HomeUtils": HomeUtils
+                };
+		const {_id, category} = req.query;
+		const product = await catagories[category].findById(_id, '-__v');
+		res.status(200).json(product);
+		return;
+	}
 }
