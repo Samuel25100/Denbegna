@@ -178,4 +178,33 @@ export default class Products {
 		res.status(200).json(product);
 		return;
 	}
+
+	static async delProduct(req, res) {
+		const token = req.headers['x-token'];
+                const user_id = await redisClient.get(token);
+		const catagories = {
+                        "Clothings": Clothings,
+                        "BookMedias": BookMedias,
+                        "Electronics": Electronics,
+                        "HomeUtils": HomeUtils
+                };
+                if (!user_id) {
+                        res.status(401).json({"message": "Session expired"});
+                        return;
+                }
+                const user = await User.findById(user_id);
+		const {_id, category} = req.body;
+		const product = await catagories[category].findById(_id);
+		if (!product) {
+                        res.status(404).json({"message": "Resource not found"});
+                        return;
+                }
+                if (!user || user_id.toString() != product.user_id) {
+                        res.status(401).json({"error": "Unauthorized"});
+                        return;
+                }
+		const response = await catagories[category].findByIdAndDelete(_id);
+		res.status(200).json({"message": "Deleting Succeed"});
+		return;
+	}
 }

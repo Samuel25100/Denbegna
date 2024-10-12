@@ -10,5 +10,6 @@ router.get('/clothings', Products.getClothings);
 router.get('/homeutils', Products.getHomeUtils);
 router.get('/bookmedias', Products.getBookMedia);
 router.get('/getproduct', Products.getProduct);
+router.delete('/del', Products.delProduct);
 
 export default router;
