@@ -14,6 +14,10 @@ export default class Products {
 			"HomeUtils": HomeUtils
 		};
 		const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
 		const user_id = await redisClient.get(token);
 		if (!user_id) {
 			res.status(401).json({"message": "Session expired"});
@@ -27,7 +31,7 @@ export default class Products {
 		const category = req.body["category"];
 		if (category == "Electronics" || category == "HomeUtils") {
 			const {name, description, price, stock} = req.body;
-			const prod = await catagories[catagory].create({
+			const prod = await catagories[category].create({
 				name, description, price, stock, user_id});
 			res.status(201).json(
 			{"_id": prod._id});
@@ -57,6 +61,10 @@ export default class Products {
 
 	static async getElectronics(req, res) {
 		const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
                 const user_id = await redisClient.get(token);
                 if (!user_id) {
                         res.status(401).json({"message": "Session expired"});
@@ -82,6 +90,10 @@ export default class Products {
 
 	static async getClothings(req, res) {
                 const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
                 const user_id = await redisClient.get(token);
                 if (!user_id) {
                         res.status(401).json({"message": "Session expired"});
@@ -107,6 +119,10 @@ export default class Products {
 
 	static async getHomeUtils(req, res) {
                 const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
                 const user_id = await redisClient.get(token);
                 if (!user_id) {
                         res.status(401).json({"message": "Session expired"});
@@ -131,6 +147,10 @@ export default class Products {
 
 	static async getBookMedia(req, res) {
                 const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
                 const user_id = await redisClient.get(token);
                 if (!user_id) {
                         res.status(401).json({"message": "Session expired"});
@@ -156,6 +176,10 @@ export default class Products {
 
 	static async getProduct(req, res) {
 		const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
                 const user_id = await redisClient.get(token);
 
                 if (!user_id) {
@@ -181,6 +205,10 @@ export default class Products {
 
 	static async delProduct(req, res) {
 		const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
                 const user_id = await redisClient.get(token);
 		const catagories = {
                         "Clothings": Clothings,

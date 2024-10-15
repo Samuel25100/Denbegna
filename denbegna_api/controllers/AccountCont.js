@@ -51,4 +51,19 @@ export default class Accountcontn {
                         return;
 		});
 	}
+
+	static async logoutacc(req, res) {
+		const token = req.headers['x-token'];
+		if (!token) {
+                        res.status(401).json({"message": "Token is missing"});
+                        return;
+                }
+		const user_id = await redisClient.get(token);
+		 if (!user_id) {
+                        res.status(401).json({"error": "Unauthorized"});
+                        return;
+                }
+		const result = await redisClient.del(token);
+		res.status(204).send();
+	}
 }
