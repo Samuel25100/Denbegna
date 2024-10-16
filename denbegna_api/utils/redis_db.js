@@ -2,7 +2,9 @@ import { createClient } from 'redis';
 
 class RedisClient {
 	constructor() {
-		this.client = createClient();
+		this.client = createClient({
+			url: process.env.REDIS_URL || "127.0.0.1:6379"
+		});
 		this.ready = true;
 		this.client.on('error', (err) => {
 			this.ready = false;
