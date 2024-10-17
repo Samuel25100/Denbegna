@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 class RedisClient {
 	constructor() {
 		this.client = createClient({
-			url: 'redis://127.0.0.1:6379'
+			url: process.env.REDIS_URL || 'redis://127.0.0.1:6379'
 		});
 		this.ready = true;
 		this.client.on('error', (err) => {
