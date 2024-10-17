@@ -5,6 +5,8 @@ import product_r from './routes/products';
 import user_auth from './routes/user_auth';
 import cart_r from './routes/cart_r';
 import order_r from './routes/order_r';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 const app = express();
@@ -17,7 +19,8 @@ app.use('/products', product_r); // routes/product_r
 app.use('/cart', cart_r);
 app.use('/order', order_r);
 
-mongoose.connect('mongodb://localhost:27017/denbegnaDB')
+const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/denbegnaDB';
+mongoose.connect(url)
 	.then(() => console.log('MongoDB connected'))
 	.catch((err) => console.log('MongoDb error:', err));
 
