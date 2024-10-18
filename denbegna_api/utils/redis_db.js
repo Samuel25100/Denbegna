@@ -1,10 +1,19 @@
 import { createClient } from 'redis';
 import dotenv from 'dotenv';
+dotenv.config();
+
 
 class RedisClient {
 	constructor() {
+		console.log("process.env.REDIS_PWD", process.env.REDIS_PWD,
+			"process.env.REDIS_H", process.env.REDIS_H,
+			"process.env.REDIS_P", process.env.REDIS_P);
 		this.client = createClient({
-			url: process.env.REDIS_URL || 'redis://127.0.0.1:6379'
+			password: process.env.REDIS_PWD || null,
+			socket: {
+				host: process.env.REDIS_H || 'redis://127.0.0.1',
+				port: process.env.REDIS_P || 6379
+			}
 		});
 		this.ready = true;
 		this.client.on('error', (err) => {
