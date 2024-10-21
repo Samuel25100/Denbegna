@@ -38,15 +38,16 @@ export default class Accountcontn {
 			return;
 		}
 		const user_id = user._id.toString();
-		bcrypt.compare(password, user.password, async (err, match) => {
-			if (err) {
-				console.error(err);
-			} else if (match) {
+		await bcrypt.compare(password, user.password,
+			async (err, match) => {
+				if (err) {
+					console.error(err);
+				} else if (match) {
 				const token = "auth_" + uuidv4().toString();
 				await redisClient.set(token, user_id, 3600);
 				res.status(200).json({"token": token});
 				return;
-			}
+				}
 			res.status(401).json({"message": "Wrong password"});
                         return;
 		});
