@@ -1,11 +1,18 @@
 const mongoose = require('mongoose');
 
+
 const ele_prod = mongoose.Schema({
 	user_id: { type: String, required: true },
 	name: { type: String, required: true },
 	description: { type: String },
 	price: { type: Number, required: true },
-	comments: { type: Map, of: String},
+	comments: [
+		{
+			user_id: { type: String, required: true },
+			comment: { type: String, required: true },
+			rating: {type: Number}
+		}
+	],
 	stock: {type: Number, required: true}
 });
 
@@ -14,7 +21,13 @@ const clothings = mongoose.Schema({
 	name: { type: String, required: true },
         description: { type: String},
         price: { type: Number, required: true },
-        comments: { type: Map, of: String },
+	comments: [
+                {
+                        user_id: { type: String, required: true },
+                        comment: { type: String, required: true },
+                        rating: {type: Number}
+                }
+        ],
         stock: { type: Number, required: true },
 	size: { type: String, required: true }
 });
@@ -24,7 +37,13 @@ const home_util = mongoose.Schema({
 	name: { type: String, required: true },
         description: { type: String},
         price: { type: Number, required: true },
-        comments: { type: Map, of: String},
+        comments: [
+                {
+                        user_id: { type: String, required: true },
+                        comment: { type: String, required: true },
+                        rating: {type: Number}
+                }
+        ],
         stock: {type: Number, required: true}
 });
 
@@ -34,7 +53,13 @@ const book_media = mongoose.Schema({
         description: { type: String},
         price: { type: Number, required: true },
 	type: { type: String, required: true },
-        comments: { type: Map, of: String},
+        comments: [
+                {
+                        user_id: { type: String, required: true },
+                        comment: { type: String, required: true },
+                        rating: {type: Number}
+                }
+        ],
         stock: {type: Number, required: true}
 });
 

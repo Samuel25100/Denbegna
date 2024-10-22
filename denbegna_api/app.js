@@ -5,6 +5,7 @@ import product_r from './routes/products';
 import user_auth from './routes/user_auth';
 import cart_r from './routes/cart_r';
 import order_r from './routes/order_r';
+import review_r from './routes/review_r';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,12 +13,14 @@ dotenv.config();
 const app = express();
 const port = process.PORT || 5000;
 
+app.set('json spaces', 2);
 app.use(cors());
 app.use(express.json());
 app.use('/auth', user_auth); // routes/user_auth
 app.use('/products', product_r); // routes/product_r
 app.use('/cart', cart_r);
 app.use('/order', order_r);
+app.use('/review', review_r);
 
 const url = process.env.MONGODB_URL || 'mongodb://localhost:27017/denbegnaDB';
 mongoose.connect(url)

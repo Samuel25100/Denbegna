@@ -5,13 +5,13 @@ dotenv.config();
 
 class RedisClient {
 	constructor() {
-		console.log("process.env.REDIS_PWD", process.env.REDIS_PWD,
+		/*console.log("process.env.REDIS_PWD", process.env.REDIS_PWD,
 			"process.env.REDIS_H", process.env.REDIS_H,
-			"process.env.REDIS_P", process.env.REDIS_P);
+			"process.env.REDIS_P", process.env.REDIS_P);*/
 		this.client = createClient({
 			password: process.env.REDIS_PWD || null,
 			socket: {
-				host: process.env.REDIS_H || 'redis://127.0.0.1',
+				host: process.env.REDIS_H || '127.0.0.1',
 				port: process.env.REDIS_P || 6379
 			}
 		});

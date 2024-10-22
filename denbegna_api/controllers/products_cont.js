@@ -198,7 +198,8 @@ export default class Products {
                         "HomeUtils": HomeUtils
                 };
 		const {_id, category} = req.query;
-		const product = await catagories[category].findById(_id, '-__v');
+		const product = await catagories[category]
+			.findById(_id, '-__v');
 		res.status(200).json(product);
 		return;
 	}
