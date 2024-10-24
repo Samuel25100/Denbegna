@@ -13,11 +13,11 @@ export default class Accountcontn {
 			return;
 		}
 		if (!name) {
-			res.status(409).json({"message": "Name is missing"});
+			res.status(400).json({"message": "Name is missing"});
 			return;
 		}
 		if (!password) {
-                        res.status(409).json({"message": "Password is missing"});
+                        res.status(400).json({"message": "Password is missing"});
                         return;
                 }
 		const hashpwd = await bcrypt.hash(password, 10);
@@ -32,6 +32,14 @@ export default class Accountcontn {
 
 	static async loginacc(req, res) {
 		const {email, password} = req.body;
+		if (!email) {
+                        res.status(400).json({"message": "Name is missing"});
+                        return;
+                }
+                if (!password) {
+                        res.status(400).json({"message": "Password is missing"});
+                        return;
+                }
 		const user = await User.findOne({ email });
 		if (!user) {
 			res.status(401).json({"error": "Email doesn't exist"});
@@ -56,7 +64,7 @@ export default class Accountcontn {
 	static async logoutacc(req, res) {
 		const token = req.headers['x-token'];
 		if (!token) {
-                        res.status(401).json({"message": "Token is missing"});
+                        res.status(400).json({"message": "Token is missing"});
                         return;
                 }
 		const user_id = await redisClient.get(token);
